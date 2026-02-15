@@ -1,0 +1,282 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Press Start 2P', cursive;
+  background: #0f0f1e;
+  background-image: 
+    repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,.2) 2px, rgba(0,0,0,.2) 4px),
+    repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0,0,0,.2) 2px, rgba(0,0,0,.2) 4px);
+  min-height: 100vh;
+  padding: 40px 20px;
+  color: #fff;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 40px;
+  animation: glitch 3s infinite;
+}
+
+.header h1 {
+  font-size: 24px;
+  color: #00ff41;
+  text-shadow: 
+    2px 2px 0px #ff00de,
+    4px 4px 0px rgba(0,0,0,0.5);
+  margin-bottom: 10px;
+}
+
+.header .subtitle {
+  font-size: 8px;
+  color: #ffff00;
+  letter-spacing: 2px;
+}
+
+@keyframes glitch {
+  0%, 100% { text-shadow: 2px 2px 0px #ff00de, 4px 4px 0px rgba(0,0,0,0.5); }
+  25% { text-shadow: -2px 2px 0px #00ffff, 4px 4px 0px rgba(0,0,0,0.5); }
+  50% { text-shadow: 2px -2px 0px #ff00de, 4px 4px 0px rgba(0,0,0,0.5); }
+  75% { text-shadow: -2px -2px 0px #00ffff, 4px 4px 0px rgba(0,0,0,0.5); }
+}
+
+.add-button {
+  display: block;
+  margin: 0 auto 40px;
+  padding: 16px 32px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 12px;
+  background: #00ff41;
+  color: #0f0f1e;
+  border: 4px solid #00cc33;
+  box-shadow: 
+    inset -4px -4px 0px rgba(0,0,0,0.3),
+    4px 4px 0px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: all 0.1s;
+  image-rendering: pixelated;
+}
+
+.add-button:hover {
+  background: #00cc33;
+  transform: translate(2px, 2px);
+  box-shadow: 
+    inset -4px -4px 0px rgba(0,0,0,0.3),
+    2px 2px 0px rgba(0,0,0,0.5);
+}
+
+.add-button:active {
+  transform: translate(4px, 4px);
+  box-shadow: 
+    inset -4px -4px 0px rgba(0,0,0,0.3),
+    0px 0px 0px rgba(0,0,0,0.5);
+}
+
+.stopwatch-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.stopwatch {
+  background: #1a1a2e;
+  border: 4px solid #00ff41;
+  padding: 24px;
+  box-shadow: 
+    inset -4px -4px 0px rgba(0,0,0,0.5),
+    8px 8px 0px rgba(0,0,0,0.3);
+  position: relative;
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.stopwatch-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.stopwatch-title {
+  font-size: 10px;
+  color: #ffff00;
+}
+
+.delete-button {
+  padding: 8px 12px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 8px;
+  background: #ff0066;
+  color: #fff;
+  border: 3px solid #cc0052;
+  cursor: pointer;
+  box-shadow: 
+    inset -2px -2px 0px rgba(0,0,0,0.3),
+    3px 3px 0px rgba(0,0,0,0.5);
+  transition: all 0.1s;
+}
+
+.delete-button:hover {
+  background: #cc0052;
+  transform: translate(1px, 1px);
+  box-shadow: 
+    inset -2px -2px 0px rgba(0,0,0,0.3),
+    2px 2px 0px rgba(0,0,0,0.5);
+}
+
+.delete-button:active {
+  transform: translate(3px, 3px);
+  box-shadow: 
+    inset -2px -2px 0px rgba(0,0,0,0.3),
+    0px 0px 0px rgba(0,0,0,0.5);
+}
+
+.display {
+  background: #0a0a14;
+  border: 4px solid #00cc33;
+  padding: 24px;
+  text-align: center;
+  margin-bottom: 20px;
+  box-shadow: inset 4px 4px 8px rgba(0,0,0,0.5);
+}
+
+.time {
+  font-size: 32px;
+  color: #00ff41;
+  text-shadow: 
+    0 0 10px #00ff41,
+    0 0 20px #00ff41;
+  letter-spacing: 4px;
+}
+
+.controls {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.control-button {
+  padding: 12px 24px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 10px;
+  border: 3px solid;
+  cursor: pointer;
+  box-shadow: 
+    inset -2px -2px 0px rgba(0,0,0,0.3),
+    4px 4px 0px rgba(0,0,0,0.5);
+  transition: all 0.1s;
+  min-width: 120px;
+}
+
+.start-button {
+  background: #00ff41;
+  color: #0f0f1e;
+  border-color: #00cc33;
+}
+
+.start-button:hover {
+  background: #00cc33;
+}
+
+.pause-button {
+  background: #ffff00;
+  color: #0f0f1e;
+  border-color: #cccc00;
+}
+
+.pause-button:hover {
+  background: #cccc00;
+}
+
+.resume-button {
+  background: #00ffff;
+  color: #0f0f1e;
+  border-color: #00cccc;
+}
+
+.resume-button:hover {
+  background: #00cccc;
+}
+
+.clear-button {
+  background: #ff6600;
+  color: #fff;
+  border-color: #cc5200;
+}
+
+.clear-button:hover {
+  background: #cc5200;
+}
+
+.control-button:active {
+  transform: translate(4px, 4px);
+  box-shadow: 
+    inset -2px -2px 0px rgba(0,0,0,0.3),
+    0px 0px 0px rgba(0,0,0,0.5);
+}
+
+.control-button:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 
+    inset -2px -2px 0px rgba(0,0,0,0.3),
+    2px 2px 0px rgba(0,0,0,0.5);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #666;
+  font-size: 10px;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+.stopwatch::before,
+.stopwatch::after {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: #00ff41;
+}
+
+.stopwatch::before {
+  top: -4px;
+  left: -4px;
+  box-shadow: 
+    0 4px 0 #00ff41,
+    4px 0 0 #00ff41;
+}
+
+.stopwatch::after {
+  bottom: -4px;
+  right: -4px;
+  box-shadow: 
+    0 -4px 0 #00ff41,
+    -4px 0 0 #00ff41;
+}
