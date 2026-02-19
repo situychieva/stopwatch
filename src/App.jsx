@@ -23,15 +23,10 @@ function App() {
     setStopwatches(prev => prev.filter(sw => sw.id !== id))
   }
 
-  const updateStopwatch = (id, updatesOrUpdater) => {
+  const updateStopwatch = (id, updater) => {
     setStopwatches(prevStopwatches =>
       prevStopwatches.map(sw =>
-        sw.id === id
-          ? (typeof updatesOrUpdater === 'function'
-              ? updatesOrUpdater(sw)
-              : { ...sw, ...updatesOrUpdater }
-            )
-          : sw
+        sw.id === id ? updater(sw) : sw
       )
     )
   }
