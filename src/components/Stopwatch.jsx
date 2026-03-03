@@ -1,30 +1,44 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 
 function Stopwatch({ stopwatch, onDelete, onUpdate }) {
   const [intervalId, setIntervalId] = useState(null)
+  const lastTimestampRef = useRef(null)
 
-  const formatTime = (seconds) => {
-    const hours = Math.floor(seconds / 3600)
-    const minutes = Math.floor((seconds % 3600) / 60)
-    const secs = seconds % 60
-    return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`
+  const formatTime = (milliseconds) => {
+    const totalMs = Math.floor(milliseconds)
+    const hours = Math.floor(totalMs / 3600000)
+    const minutes = Math.floor((totalMs % 3600000) / 60000)
+    const seconds = Math.floor((totalMs % 60000) / 1000)
+    const centiseconds = Math.floor((totalMs % 1000) / 10)
+
+    return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(
+      seconds
+    ).padStart(2, '0')}.${String(centiseconds).padStart(2, '0')}`
   }
 
   const handleStart = () => {
     if (stopwatch.isRunning || intervalId) return
 
-    onUpdate(stopwatch.id, (sw) => ({
+    onUpdate(stopwatch.id, sw => ({
       ...sw,
       isRunning: true,
       isPaused: false
     }))
 
+    const now = (typeof performance !== 'undefined' && performance.now) ? performance.now() : Date.now()
+    lastTimestampRef.current = now
+
     const id = setInterval(() => {
-      onUpdate(stopwatch.id, (sw) => ({
+      const current = (typeof performance !== 'undefined' && performance.now) ? performance.now() : Date.now()
+      const last = lastTimestampRef.current ?? current
+      const delta = current - last
+      lastTimestampRef.current = current
+
+      onUpdate(stopwatch.id, sw => ({
         ...sw,
-        time: sw.time + 1
+        time: sw.time + delta
       }))
-    }, 1000)
+    }, 10)
 
     setIntervalId(id)
   }
@@ -34,8 +48,9 @@ function Stopwatch({ stopwatch, onDelete, onUpdate }) {
 
     clearInterval(intervalId)
     setIntervalId(null)
+    lastTimestampRef.current = null
 
-    onUpdate(stopwatch.id, (sw) => ({
+    onUpdate(stopwatch.id, sw => ({
       ...sw,
       isRunning: false,
       isPaused: true
@@ -45,18 +60,26 @@ function Stopwatch({ stopwatch, onDelete, onUpdate }) {
   const handleResume = () => {
     if (stopwatch.isRunning || intervalId) return
 
-    onUpdate(stopwatch.id, (sw) => ({
+    onUpdate(stopwatch.id, sw => ({
       ...sw,
       isRunning: true,
       isPaused: false
     }))
 
+    const now = (typeof performance !== 'undefined' && performance.now) ? performance.now() : Date.now()
+    lastTimestampRef.current = now
+
     const id = setInterval(() => {
-      onUpdate(stopwatch.id, (sw) => ({
+      const current = (typeof performance !== 'undefined' && performance.now) ? performance.now() : Date.now()
+      const last = lastTimestampRef.current ?? current
+      const delta = current - last
+      lastTimestampRef.current = current
+
+      onUpdate(stopwatch.id, sw => ({
         ...sw,
-        time: sw.time + 1
+        time: sw.time + delta
       }))
-    }, 1000)
+    }, 10)
 
     setIntervalId(id)
   }
@@ -66,8 +89,9 @@ function Stopwatch({ stopwatch, onDelete, onUpdate }) {
       clearInterval(intervalId)
       setIntervalId(null)
     }
+    lastTimestampRef.current = null
 
-    onUpdate(stopwatch.id, (sw) => ({
+    onUpdate(stopwatch.id, sw => ({
       ...sw,
       time: 0,
       isRunning: false,
